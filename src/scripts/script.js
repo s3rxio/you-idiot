@@ -13,6 +13,9 @@ const editButtonPosition = (button) => {
     button.style.position = 'absolute';
     button.style.left = `${x}px`;
     button.style.top = `${y}px`;
+    button.style.zIndex = '1';
+    button.style.backgroundColor = 'unset';
+    button.style.color = '#fff';
 }
 
 const buttons = document.querySelectorAll('.button');
