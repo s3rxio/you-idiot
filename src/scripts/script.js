@@ -8,8 +8,8 @@ const randomPosition = () => {
 }
 
 const editButtonPosition = (button) => {
+    if(isIdiot) return;
     const { x, y } = randomPosition();
-    console.log(x, y);
     button.style.position = 'absolute';
     button.style.left = `${x}px`;
     button.style.top = `${y}px`;
@@ -19,17 +19,24 @@ const editButtonPosition = (button) => {
 }
 
 const buttons = document.querySelectorAll('.button');
+const questionTitle = document.querySelector('.question__title');
+let isIdiot = false;
 buttons.forEach(button => {
-    switch (button.dataset.action) {
+    let {action, title} = button.dataset;
+    switch (action) {
         case 'editTitle':
-            button.addEventListener('click', () => {
-                document.querySelector('.question__title').innerHTML = button.dataset.title
-            });
+            button.onclick = () => {
+                if (isIdiot) title = "YEAA, YOU IdIoT";
+                questionTitle.textContent = title;
+                isIdiot = true;
+            };
             break;
+
         case 'editButtonPosition':
-            button.ontouchstart = editButtonPosition.bind(null, button);
-            button.onclick = editButtonPosition.bind(null, button);
-            button.onmouseenter = editButtonPosition.bind(null, button);
+                button.ontouchstart = () => editButtonPosition(button);
+                button.onclick = () => isIdiot ? questionTitle.textContent = title : editButtonPosition(button);
+                button.onmouseenter = () => editButtonPosition(button);
+
             break;
     }
 });
